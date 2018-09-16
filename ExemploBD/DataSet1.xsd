@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" GeneratorFunctionsComponentClassName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" UserFunctionsComponentName="QueriesTableAdapter" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="ExercicioDBConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ExercicioDBConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.ExemploBD.Properties.Settings.GlobalReference.Default.ExercicioDBConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources>
+          <DbSource ConnectionRef="ExercicioDBConnectionString (Settings)" DbObjectName="dbo.Cliente" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetFirstQuery" MethodsParameterType="CLR" Modifier="Public" Name="GetFirstQuery" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="GetFirstQuery">
+            <SelectCommand>
+              <DbCommand CommandType="Text" ModifiedByUser="true">
+                <CommandText>SELECT        Cliente.*
+FROM            Cliente
+WHERE        (Id = 1)</CommandText>
+                <Parameters />
+              </DbCommand>
+            </SelectCommand>
+          </DbSource>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Cliente" msprop:Generator_TableClassName="ClienteDataTable" msprop:Generator_TableVarName="tableCliente" msprop:Generator_TablePropName="Cliente" msprop:Generator_RowDeletingName="ClienteRowDeleting" msprop:Generator_RowChangingName="ClienteRowChanging" msprop:Generator_RowEvHandlerName="ClienteRowChangeEventHandler" msprop:Generator_RowDeletedName="ClienteRowDeleted" msprop:Generator_UserTableName="Cliente" msprop:Generator_RowChangedName="ClienteRowChanged" msprop:Generator_RowEvArgName="ClienteRowChangeEvent" msprop:Generator_RowClassName="ClienteRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_UserColumnName="Id" type="xs:int" />
+              <xs:element name="nome" msprop:Generator_ColumnVarNameInTable="columnnome" msprop:Generator_ColumnPropNameInRow="nome" msprop:Generator_ColumnPropNameInTable="nomeColumn" msprop:Generator_UserColumnName="nome" type="xs:string" minOccurs="0" />
+              <xs:element name="cpf" msprop:Generator_ColumnVarNameInTable="columncpf" msprop:Generator_ColumnPropNameInRow="cpf" msprop:Generator_ColumnPropNameInTable="cpfColumn" msprop:Generator_UserColumnName="cpf" type="xs:string" minOccurs="0" />
+              <xs:element name="rg" msprop:Generator_ColumnVarNameInTable="columnrg" msprop:Generator_ColumnPropNameInRow="rg" msprop:Generator_ColumnPropNameInTable="rgColumn" msprop:Generator_UserColumnName="rg" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Endereco" msprop:Generator_TableClassName="EnderecoDataTable" msprop:Generator_TableVarName="tableEndereco" msprop:Generator_TablePropName="Endereco" msprop:Generator_RowDeletingName="EnderecoRowDeleting" msprop:Generator_RowChangingName="EnderecoRowChanging" msprop:Generator_RowEvHandlerName="EnderecoRowChangeEventHandler" msprop:Generator_RowDeletedName="EnderecoRowDeleted" msprop:Generator_UserTableName="Endereco" msprop:Generator_RowChangedName="EnderecoRowChanged" msprop:Generator_RowEvArgName="EnderecoRowChangeEvent" msprop:Generator_RowClassName="EnderecoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_UserColumnName="Id" type="xs:int" />
+              <xs:element name="rua" msprop:Generator_ColumnVarNameInTable="columnrua" msprop:Generator_ColumnPropNameInRow="rua" msprop:Generator_ColumnPropNameInTable="ruaColumn" msprop:Generator_UserColumnName="rua" type="xs:string" minOccurs="0" />
+              <xs:element name="bairro" msprop:Generator_ColumnVarNameInTable="columnbairro" msprop:Generator_ColumnPropNameInRow="bairro" msprop:Generator_ColumnPropNameInTable="bairroColumn" msprop:Generator_UserColumnName="bairro" type="xs:string" minOccurs="0" />
+              <xs:element name="cep" msprop:Generator_ColumnVarNameInTable="columncep" msprop:Generator_ColumnPropNameInRow="cep" msprop:Generator_ColumnPropNameInTable="cepColumn" msprop:Generator_UserColumnName="cep" type="xs:string" minOccurs="0" />
+              <xs:element name="complemento" msprop:Generator_ColumnVarNameInTable="columncomplemento" msprop:Generator_ColumnPropNameInRow="complemento" msprop:Generator_ColumnPropNameInTable="complementoColumn" msprop:Generator_UserColumnName="complemento" type="xs:string" minOccurs="0" />
+              <xs:element name="numero" msprop:Generator_ColumnVarNameInTable="columnnumero" msprop:Generator_ColumnPropNameInRow="numero" msprop:Generator_ColumnPropNameInTable="numeroColumn" msprop:Generator_UserColumnName="numero" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:Cliente" />
+      <xs:field xpath="mstns:Id" />
+    </xs:unique>
+    <xs:unique name="Endereco_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:Endereco" />
+      <xs:field xpath="mstns:Id" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Endereco_Cliente" msdata:parent="Endereco" msdata:child="Cliente" msdata:parentkey="Id" msdata:childkey="Id" msprop:Generator_UserChildTable="Cliente" msprop:Generator_ChildPropName="GetClienteRows" msprop:Generator_UserRelationName="Endereco_Cliente" msprop:Generator_RelationVarName="relationEndereco_Cliente" msprop:Generator_UserParentTable="Endereco" msprop:Generator_ParentPropName="EnderecoRow" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

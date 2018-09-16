@@ -1,11 +1,6 @@
 ﻿using ExemploBD.Models;
 using ExemploBD.Models.DAO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace ExemploBD
 {
@@ -15,46 +10,75 @@ namespace ExemploBD
         {
 
         }
-
-        protected void btnAdicionar_Click(object sender, EventArgs e)
+        private void PreencherCampos(Cliente c)
         {
-            ClienteDAO clienteDao = new ClienteDAO();
-            Cliente cliente = new Cliente()
-            {
-                Nome = txtNome.Text,
-                Cpf = txtCPF.Text,
-                Rg = txtRG.Text
-            };
-            cliente = clienteDao.Inserir(cliente);
-            if(cliente != null )
-            {
-                Session["cliente"] = cliente;
-                Response.Redirect("~/vwEndereco.aspx");
-            }
-        }
-
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            ClienteDAO clienteDao = new ClienteDAO();
-            Cliente c = clienteDao.BuscarPorId(Convert.ToInt32(txtId.Text));
-            lblResultado.Text = "";
             if (c != null)
             {
+                txtId.Text = Convert.ToString(c.Id);
                 txtNome.Text = c.Nome;
                 txtCPF.Text = c.Cpf;
                 txtRG.Text = c.Rg;
-            }else
-            {
-                txtNome.Text = "";
-                txtCPF.Text = "";
-                txtRG.Text = "";
+                txtEndereco.Text = c.Endereco_id;
             }
-            
+            else
+            {
+                LimparCampos();
+            }
+        }
+
+        private void LimparCampos()
+        {
+            txtId.Text = "";
+            txtNome.Text = "";
+            txtCPF.Text = "";
+            txtRG.Text = "";
+            txtEndereco.Text = "";
+        }
+
+        protected void btnAdicionar_Click(object sender, EventArgs e)
+        {
+            if (txtEndereco.Text != "" || txtNome.Text != "" || txtCPF.Text != "" || txtRG.Text != "")
+            {
+                Cliente cliente = new Cliente(txtNome.Text, txtCPF.Text, txtRG.Text, txtEndereco.Text);
+                cliente = ClienteDAO.Inserir(cliente);
+                if (cliente != null)
+                {
+                    Session["cliente"] = cliente;
+                    Response.Redirect("~/vwEndereco.aspx");
+                }
+            }
+            else
+            {
+                lblResultado.Text = "Não foi possivel adicionar um cliente!";
+            }
+        }
+
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            if(txtId.Text != "")
+            {
+                Cliente c = ClienteDAO.BuscarPorId(Convert.ToInt32(txtId.Text));
+                lblResultado.Text = "";
+                if (c != null)
+                {
+                    PreencherCampos(c);
+                }
+                else
+                {
+                    lblResultado.Text = "Não existe um cliente com esse ID!";
+                }
+            }
+            else
+            {
+                lblResultado.Text = "ID não preenchido!";
+            }
+
+
         }
 
         protected void btnAlterar_Click(object sender, EventArgs e)
         {
-            ClienteDAO clienteDao = new ClienteDAO();
             Cliente c = new Cliente()
             {
                 Id = Convert.ToInt32(txtId.Text),
@@ -62,23 +86,28 @@ namespace ExemploBD
                 Cpf = txtCPF.Text,
                 Rg = txtRG.Text
             };
-            c = clienteDao.Alterar(c);
-            if (c != null)
+            if (ClienteDAO.Alterar(c))
+            {
                 lblResultado.Text = "Cliente alterado com sucesso!";
+            }
         }
 
         protected void btnDeletar_Click(object sender, EventArgs e)
         {
-            ClienteDAO clienteDao = new ClienteDAO();
-            Cliente c = new Cliente()
+            if (txtId.Text != "")
             {
-                Id = Convert.ToInt32(txtId.Text),
-    
-            };
-            c = clienteDao.Deletar(c);
-            if (c != null)
-                lblResultado.Text = "Cliente deletado com sucesso!";
+                Cliente c = ClienteDAO.BuscarPorId(Convert.ToInt32(txtId.Text));
+                if (ClienteDAO.Deletar(c))
+                {
+                    lblResultado.Text = "Cliente deletado com sucesso!";
+                }
+            }
+            else
+            {
+                lblResultado.Text = "Não foi possivel deletar o cliente.";
+            }
         }
+
 
         protected void btnEndereco_Click(object sender, EventArgs e)
         {

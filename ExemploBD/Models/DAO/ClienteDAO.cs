@@ -1,144 +1,42 @@
-﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
+﻿using Dapper.Contrib.Extensions;
+using MySql.Data.MySqlClient;
 
 namespace ExemploBD.Models.DAO
 {
-    public class ClienteDAO
+    public static class ClienteDAO
     {
-        private ConexaoDB con;
-        public ClienteDAO()
+        static private readonly string con = "Server=localhost;Database=mydb;Uid=root;Pwd=admin";
+
+        public static Cliente BuscarPorId(int id)
         {
-            con = new ConexaoDB();
-        }
-        public DataTable ListarTodos()
-        {
-            try
+            using (MySqlConnection connection = new MySqlConnection(con))
             {
-                DataTable table = new DataTable();
-                MySqlDataAdapter sqlData =
-                    new MySqlDataAdapter("SELECT * FROM cliente",
-                    con.Conexao);
-                sqlData.Fill(table);
-                return table;
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-            finally
-            {
-                con.Conexao.Close();
+                return connection.Get<Cliente>(id);
             }
         }
-        public Cliente BuscarPorId(int id)
-        {
-            try
+        public static Cliente Inserir(Cliente cliente) { 
+            using (MySqlConnection connection = new MySqlConnection(con))
             {
-                string comando = "SELECT * FROM cliente " +
-                    "WHERE id = @id";
-                con.Comando.CommandText = comando;
-                con.Comando.Parameters.AddWithValue("@id", id);
-                MySqlDataReader reader = con.Comando.ExecuteReader();
-                if (reader.HasRows)
+                long retorno = connection.Insert(cliente);
+                return retorno > 0 ? cliente : null;
+            }
+        }
+        public static bool Alterar(Cliente cliente)
+        {
+            using (MySqlConnection connection = new MySqlConnection(con))
+            {
+                return connection.Update(cliente);
+            }
+        }
+        public static bool Deletar(Cliente cliente)
+        {
+            using (MySqlConnection connection = new MySqlConnection(con))
+            {
+                if (cliente != null)
                 {
-                    reader.Read();
-                    Cliente c = new Cliente()
-                    {
-                        Nome = reader["nome"].ToString(),
-                        Id = Convert.ToInt32(reader["id"]),
-                        Cpf = reader["cpf"].ToString(),
-                        Rg = reader["rg"].ToString()
-                    };
-                    return c;
+                    return connection.Delete(cliente);
                 }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-            finally
-            {
-                con.Conexao.Close();
-            }
-        }
-        public Cliente Inserir(Cliente c)
-        {
-            try
-            {
-                string sql = "INSERT INTO cliente(nome, cpf, rg) VALUES" +
-                    "(@nome, @cpf, @rg);";
-                con.Comando.CommandText = sql;
-                con.Comando.Parameters.AddWithValue("@nome", c.Nome);
-                con.Comando.Parameters.AddWithValue("@cpf", c.Cpf);
-                con.Comando.Parameters.AddWithValue("@rg", c.Rg);
-                int retorno = con.Comando.ExecuteNonQuery();
-                if (retorno > 0)
-                {
-                    c.Id = Convert.ToInt32(con.Comando.LastInsertedId.ToString());
-                    return c;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-            finally
-            {
-                con.Conexao.Close();
-            }
-        }
-        public Cliente Alterar(Cliente c)
-        {
-            try
-            {
-                string sql = "UPDATE cliente SET nome = @nome," +
-                    "cpf = @cpf, rg = @rg WHERE id = @id";
-                con.Comando.CommandText = sql;
-                con.Comando.Parameters.AddWithValue("@nome", c.Nome);
-                con.Comando.Parameters.AddWithValue("@cpf", c.Cpf);
-                con.Comando.Parameters.AddWithValue("@rg", c.Rg);
-                con.Comando.Parameters.AddWithValue("@id", c.Id);
-                int returno = con.Comando.ExecuteNonQuery();
-                return returno > 0 ? c : null;
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-            finally
-            {
-                con.Conexao.Close();
-            }
-        }
-        public Cliente Deletar(Cliente c)
-        {
-            try
-            {
-                con.Comando.CommandText = "DELETE FROM cliente " +
-                    "WHERE id = @id;";
-                con.Comando.Parameters.AddWithValue("@id", c.Id);
-                int retorno = con.Comando.ExecuteNonQuery();
-                return retorno > 0 ? c : null;
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-            finally
-            {
-                con.Conexao.Close();
+                return false;
             }
         }
     }
